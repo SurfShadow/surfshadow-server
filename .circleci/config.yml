@@ -1,11 +1,9 @@
-# This config was automatically generated from your source code
-# Stacks detected: artifact:go-executable:,deps:go:.
 version: 2.1
+
 jobs:
   test-go:
-    # Install go modules and run tests
     docker:
-      - image: cimg/go:1.20
+      - image: cimg/go:1.23
     steps:
       - checkout
       - run:
@@ -13,10 +11,10 @@ jobs:
           command: gotestsum --junitfile junit.xml
       - store_test_results:
           path: junit.xml
+          
   build-go-executables:
-    # Build go executables and store them as artifacts
     docker:
-      - image: cimg/go:1.20
+      - image: cimg/go:1.23
     steps:
       - checkout
       - run:
@@ -29,14 +27,43 @@ jobs:
           path: ~/artifacts
           destination: executables
   deploy:
-    # This is an example deploy job, not actually used by the workflow
     docker:
       - image: cimg/base:stable
     steps:
-      # Replace this with steps to deploy to users
       - run:
           name: deploy
           command: '#e.g. ./deploy.sh'
+  setup:
+    executor: my-executor
+    steps:
+      - checkout
+      - restore_cache:
+          key: lock-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: lock-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
+  lint_commit_message:
+    executor: my-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Define environment variable with latest commit's message
+          command: |
+            echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
+            source $BASH_ENV
+      - run:
+          name: Lint commit message
+          command: echo "$COMMIT_MESSAGE" | npx commitlint
 workflows:
   build-and-test:
     jobs:
@@ -47,3 +74,9 @@ workflows:
     # - deploy:
     #     requires:
     #       - build-go-executables
+  commit:
+    jobs:
+      - setup
+      - lint_commit_message:
+          requires:
+            - setup
