@@ -1,6 +1,6 @@
 CREATE TABLE "users" (
   "telegram_id" bigint PRIMARY KEY,
-  "username" varchar(128),
+  "username" varchar(128) UNIQUE,
   "role_id" bigint NOT NULL,
   "balance" money DEFAULT 0,
   "referer_id" bigint,
