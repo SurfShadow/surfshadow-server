@@ -1,0 +1,10 @@
+ALTER TABLE "users" ADD FOREIGN KEY ("role_id") REFERENCES "roles" ("id");
+ALTER TABLE "users" ADD FOREIGN KEY ("referer_id") REFERENCES "users" ("telegram_id");
+ALTER TABLE "configs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("telegram_id");
+ALTER TABLE "configs" ADD FOREIGN KEY ("server_id") REFERENCES "servers" ("id");
+ALTER TABLE "referals" ADD FOREIGN KEY ("referee_id") REFERENCES "users" ("telegram_id");
+ALTER TABLE "referals" ADD FOREIGN KEY ("referal_id") REFERENCES "users" ("telegram_id");
+ALTER TABLE "transactions" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("telegram_id");
+ALTER TABLE "subcriptions" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("telegram_id");
+ALTER TABLE "subcriptions" ADD FOREIGN KEY ("subscription_type_id") REFERENCES "subcription_types" ("id");
+ALTER TABLE "server_credentials" ADD FOREIGN KEY ("server_id") REFERENCES "servers" ("id");

@@ -1,0 +1,9 @@
+CREATE INDEX "idx_users_role_id" ON "users" ("role_id");
+CREATE INDEX "idx_users_referer_id" ON "users" ("referer_id");
+CREATE INDEX "idx_config_user_id" ON "configs" ("user_id");
+CREATE INDEX "idx_configs_server_id" ON "configs" ("server_id");
+CREATE INDEX "idx_referals_referee_id" ON "referals" ("referee_id");
+CREATE INDEX "idx_referee_referals_id" ON "referals" ("referal_id");
+CREATE INDEX "idx_payments_user_id" ON "transactions" ("user_id");
+CREATE INDEX "idx_servers_location" ON "servers" ("location");
+CREATE INDEX "idx_server_credentials_server_id" ON "server_credentials" ("server_id");

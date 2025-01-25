@@ -1,0 +1,1 @@
+CREATE TYPE os_enum AS ENUM ('windows', 'macos', 'linux', 'android', 'ios');
