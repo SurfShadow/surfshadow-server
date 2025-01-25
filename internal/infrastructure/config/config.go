@@ -44,21 +44,17 @@ func LoadConfig() (*Config, error) {
 	viper.SetConfigFile(".env")
 	viper.SetConfigType("env")
 
-	// Default values for app server configuration
 	viper.SetDefault("SERVER.SERVER_PORT", 8080)
 	viper.SetDefault("SERVER.SERVER_SSL", false)
 
-	// Default values for database configuration
 	viper.SetDefault("DB.POSTGRES_HOST", "localhost")
 	viper.SetDefault("DB.POSTGRES_PORT", 5432)
 	viper.SetDefault("DB.POSTGRES_USER", "admin")
 	viper.SetDefault("DB.POSTGRES_PASSWORD", "admin")
 	viper.SetDefault("DB.POSTGRES_DB", "database")
 
-	// Default values for logger configuration
 	viper.SetDefault("LOGGER.LOG_LEVEL", "info")
 
-	// Default values for metrics server configuration
 	viper.SetDefault("METRICS_PORT", 9090)
 
 	viper.AutomaticEnv()
