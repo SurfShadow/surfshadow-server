@@ -1,22 +1,32 @@
 version: 2.1
 
+executors:
+  my-executor:
+    docker:
+      - image: cimg/node:current
+    working_directory: ~/project
+
 jobs:
   test-go:
     docker:
       - image: cimg/go:1.23
+    working_directory: ~/project
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: Run tests
           command: gotestsum --junitfile junit.xml
       - store_test_results:
           path: junit.xml
-          
+
   build-go-executables:
     docker:
       - image: cimg/go:1.23
+    working_directory: ~/project
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: Create the ~/artifacts directory if it doesn't exist
           command: mkdir -p ~/artifacts
@@ -26,17 +36,40 @@ jobs:
       - store_artifacts:
           path: ~/artifacts
           destination: executables
+
   deploy:
     docker:
       - image: cimg/base:stable
+    working_directory: ~/project
     steps:
       - run:
           name: deploy
           command: '#e.g. ./deploy.sh'
+
   setup:
     executor: my-executor
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
+      - run:
+          name: Create package.json
+          command: |
+            echo '{
+              "name": "temp-project",
+              "version": "1.0.0",
+              "description": "",
+              "main": "index.js",
+              "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1"
+              },
+              "keywords": [],
+              "author": "",
+              "license": "ISC",
+              "devDependencies": {
+                "@commitlint/cli": "^19.6.1",
+                "@commitlint/config-conventional": "^19.6.0"
+              }
+            }' > package.json
       - restore_cache:
           key: lock-{{ checksum "package-lock.json" }}
       - run:
@@ -50,10 +83,12 @@ jobs:
           root: ~/project
           paths:
             - node_modules
+
   lint_commit_message:
     executor: my-executor
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - attach_workspace:
           at: ~/project
       - run:
@@ -64,6 +99,7 @@ jobs:
       - run:
           name: Lint commit message
           command: echo "$COMMIT_MESSAGE" | npx commitlint
+
 workflows:
   build-and-test:
     jobs:
@@ -71,9 +107,10 @@ workflows:
       - build-go-executables:
           requires:
             - test-go
-    # - deploy:
-    #     requires:
-    #       - build-go-executables
+      # - deploy:
+      #     requires:
+      #       - build-go-executables
+
   commit:
     jobs:
       - setup
