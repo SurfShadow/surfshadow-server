@@ -2,12 +2,11 @@ package db
 
 import (
 	"fmt"
+	"time"
 
-	_ "github.com/jackc/pgx/stdlib"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/SurfShadow/surfshadow-server/internal/infrastructure/config"
-	"time"
 )
 
 const (
@@ -18,7 +17,8 @@ const (
 )
 
 func NewPsqlDB(c *config.Config) (*sqlx.DB, error) {
-	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s",
+	dataSourceName := fmt.Sprintf(
+		"host=%s port=%s user=%s dbname=%s sslmode=disable password=%s",
 		c.DB.Host,
 		c.DB.Port,
 		c.DB.User,
@@ -36,7 +36,7 @@ func NewPsqlDB(c *config.Config) (*sqlx.DB, error) {
 	db.SetMaxIdleConns(maxIdleConns)
 	db.SetConnMaxIdleTime(connMaxIdleTime * time.Second)
 
-	if err = db.Ping(); err != nil {
+	if err := db.Ping(); err != nil {
 		return nil, err
 	}
 
