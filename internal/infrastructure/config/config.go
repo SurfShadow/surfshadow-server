@@ -8,11 +8,11 @@ import (
 )
 
 type Config struct {
-	Server  ServerConfig  `mapstructure:"SERVER" validate:"required"`
-	DB      DBConfig      `mapstructure:"DB" validate:"required"`
-	Logger  LoggerConfig  `mapstructure:"LOGGER" validate:"required"`
-	Metrics MetricsConfig `mapstructure:"METRICS" validate:"required"`
-	AuthAPI AuthAPIConfig `mapstructure:"API" validate:"required"`
+	Server  *ServerConfig  `mapstructure:"SERVER" validate:"required"`
+	DB      *DBConfig      `mapstructure:"DB" validate:"required"`
+	Logger  *LoggerConfig  `mapstructure:"LOGGER" validate:"required"`
+	Metrics *MetricsConfig `mapstructure:"METRICS" validate:"required"`
+	AuthAPI *AuthAPIConfig `mapstructure:"API" validate:"required"`
 }
 
 type ServerConfig struct {
