@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	_ "github.com/jackc/pgx/stdlib"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/SurfShadow/surfshadow-server/internal/infrastructure/config"
@@ -16,17 +17,17 @@ const (
 	connMaxIdleTime = 20
 )
 
-func NewPsqlDB(c *config.Config) (*sqlx.DB, error) {
+func NewPsqlDB(c *config.DBConfig) (*sqlx.DB, error) {
 	dataSourceName := fmt.Sprintf(
 		"host=%s port=%d user=%s dbname=%s sslmode=disable password=%s",
-		c.DB.Host,
-		c.DB.Port,
-		c.DB.User,
-		c.DB.DataBaseName,
-		c.DB.Password,
+		c.Host,
+		c.Port,
+		c.User,
+		c.DataBaseName,
+		c.Password,
 	)
 
-	db, err := sqlx.Connect(c.DB.PgDriver, dataSourceName)
+	db, err := sqlx.Connect(c.PgDriver, dataSourceName)
 	if err != nil {
 		return nil, err
 	}
