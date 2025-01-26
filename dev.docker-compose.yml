@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  databse:
+  database:
     container_name: database
     image: postgres:latest
     environment:
@@ -30,3 +30,6 @@ services:
       - .:/app
     depends_on:
       - database
+        
+volumes:
+  postgres_data:
