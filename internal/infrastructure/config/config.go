@@ -16,13 +16,13 @@ type Config struct {
 
 type ServerConfig struct {
 	AppVersion string `mapstructure:"APP_VERSION"`
-	Port       int16  `mapstructure:"PORT"`
+	Port       uint16 `mapstructure:"PORT"`
 	SSL        bool   `mapstructure:"SSL"`
 }
 
 type DBConfig struct {
 	Host         string `mapstructure:"POSTGRES_HOST"`
-	Port         int16  `mapstructure:"POSTGRES_PORT"`
+	Port         uint16 `mapstructure:"POSTGRES_PORT"`
 	User         string `mapstructure:"POSTGRES_USER"`
 	Password     string `mapstructure:"POSTGRES_PASSWORD"`
 	DataBaseName string `mapstructure:"POSTGRES_DB"`
