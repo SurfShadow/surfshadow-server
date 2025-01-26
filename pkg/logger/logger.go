@@ -13,10 +13,12 @@ type Logger struct {
 	*zap.SugaredLogger
 }
 
-func NewLogger(cfg *config.LoggerConfig) (*Logger, error) {
+var Instance *Logger
+
+func NewLogger(cfg *config.LoggerConfig) error {
 	var zapLevel zapcore.Level
 	if err := zapLevel.UnmarshalText([]byte(cfg.Level)); err != nil {
-		return nil, err
+		return err
 	}
 
 	encoderConfig := zapcore.EncoderConfig{
@@ -48,7 +50,11 @@ func NewLogger(cfg *config.LoggerConfig) (*Logger, error) {
 
 	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(0))
 
-	return &Logger{logger.Sugar()}, nil
+	Instance = &Logger{
+		logger.Sugar(),
+	}
+
+	return nil
 }
 
 func customColorLevelEncoder(level zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
