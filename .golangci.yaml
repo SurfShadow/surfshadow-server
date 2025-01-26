@@ -69,3 +69,13 @@ issues:
       linters:
         - gocritic
       text: 'hugeParam\: \S+ is heavy \(\d+ bytes\)\; consider passing it by pointer'
+
+    - path: "internal/infrastructure/db/postgress.go"
+      linters:
+        - revive
+      text: "Import for side effects"
+
+    - path: "internal/infrastructure/migrations/migrate.go"
+      linters:
+        - revive
+      text: "Import for side effects"

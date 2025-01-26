@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	_ "github.com/jackc/pgx/stdlib"
+	_ "github.com/jackc/pgx/stdlib" // Import for side effects
 	"github.com/jmoiron/sqlx"
 
 	"github.com/SurfShadow/surfshadow-server/internal/infrastructure/config"
