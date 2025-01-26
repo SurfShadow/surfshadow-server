@@ -1,1 +1,0 @@
-DROP TYPE IF EXISTS os_enum;
