@@ -18,7 +18,7 @@ const (
 
 func NewPsqlDB(c *config.Config) (*sqlx.DB, error) {
 	dataSourceName := fmt.Sprintf(
-		"host=%s port=%s user=%s dbname=%s sslmode=disable password=%s",
+		"host=%s port=%d user=%s dbname=%s sslmode=disable password=%s",
 		c.DB.Host,
 		c.DB.Port,
 		c.DB.User,
