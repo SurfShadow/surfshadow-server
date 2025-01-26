@@ -26,6 +26,7 @@ type DBConfig struct {
 	User         string `mapstructure:"POSTGRES_USER"`
 	Password     string `mapstructure:"POSTGRES_PASSWORD"`
 	DataBaseName string `mapstructure:"POSTGRES_DB"`
+	PgDriver     string `mapstructure:"POSTGRES_DRIVER"`
 }
 
 type LoggerConfig struct {
@@ -52,6 +53,7 @@ func LoadConfig() (*Config, error) {
 	viper.SetDefault("DB.POSTGRES_USER", "admin")
 	viper.SetDefault("DB.POSTGRES_PASSWORD", "admin")
 	viper.SetDefault("DB.POSTGRES_DB", "database")
+	viper.SetDefault("DB.POSTGRES_DRIVER", "pgx")
 
 	viper.SetDefault("LOGGER.LOG_LEVEL", "info")
 
