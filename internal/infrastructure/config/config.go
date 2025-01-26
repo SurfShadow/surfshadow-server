@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+
 	"github.com/go-playground/validator/v10"
 	"github.com/spf13/viper"
 )
@@ -30,7 +31,8 @@ type DBConfig struct {
 }
 
 type LoggerConfig struct {
-	Level string `mapstructure:"LOG_LEVEL" validate:"required,oneof=debug info warn error dpanic panic fatal"`
+	Environment string `mapstructure:"ENVIRONMENT" validate:"required,oneof=dev prod"`
+	Level       string `mapstructure:"LOG_LEVEL" validate:"required,oneof=debug info warn error dpanic panic fatal"`
 }
 
 type MetricsConfig struct {
@@ -56,6 +58,7 @@ func LoadConfig() (*Config, error) {
 	viper.SetDefault("DB.POSTGRES_DRIVER", "pgx")
 
 	viper.SetDefault("LOGGER.LOG_LEVEL", "info")
+	viper.SetDefault("LOGGER.ENVIRONMENT", "dev")
 
 	viper.SetDefault("METRICS_PORT", 9090)
 
