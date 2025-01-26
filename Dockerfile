@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o surfshadow-server ./cmd/server/main.go
+RUN go build -o surfshadow-server ./cmd/server
 
 FROM alpine:latest
 
@@ -15,5 +15,6 @@ WORKDIR /app
 
 COPY --from=builder /app/surfshadow-server .
 COPY --from=builder /app/migrations ./migrations
+COPY .env .env
 
 CMD ["./surfshadow-server"]
