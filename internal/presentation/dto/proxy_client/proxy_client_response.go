@@ -1,4 +1,4 @@
-package dto
+package proxy_client
 
 type ProxyClientResponse struct {
 	ID           int64  `json:"id"`

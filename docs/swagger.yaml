@@ -1,0 +1,184 @@
+basePath: /api/v1
+definitions:
+  dto.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  proxy_client.ProxyClientRequest:
+    properties:
+      download_link:
+        type: string
+      os:
+        enum:
+        - windows
+        - macos
+        - linux
+        - android
+        - ios
+        type: string
+      title:
+        type: string
+    required:
+    - download_link
+    - os
+    - title
+    type: object
+  proxy_client.ProxyClientResponse:
+    properties:
+      created_at:
+        type: string
+      download_link:
+        type: string
+      id:
+        type: integer
+      os:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Rent VPN VLESS configs
+  title: SurfShadow API
+  version: 1.0.0
+paths:
+  /clients/{vpn_client_id}:
+    delete:
+      description: Remove a VPN client from the database by its unique id.
+      parameters:
+      - description: Client ID
+        in: path
+        name: vpn_client_id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Delete a VPN client by id
+      tags:
+      - clients
+    patch:
+      consumes:
+      - application/json
+      description: Update details of an existing VPN client.
+      parameters:
+      - description: Client ID
+        in: path
+        name: vpn_client_id
+        required: true
+        type: integer
+      - description: Update Client
+        in: body
+        name: client
+        required: true
+        schema:
+          $ref: '#/definitions/proxy_client.ProxyClientRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Update an existing VPN client by id
+      tags:
+      - clients
+  /proxy-clients:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of VPN clients available for download.
+      parameters:
+      - description: Client ID
+        in: query
+        name: id
+        type: integer
+      - description: Client Title
+        in: query
+        name: title
+        type: string
+      - description: Client OS
+        in: query
+        name: os
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/proxy_client.ProxyClientResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Get a list of VPN clients
+      tags:
+      - clients
+    post:
+      consumes:
+      - application/json
+      description: Add a new VPN client to the database.
+      parameters:
+      - description: New Client
+        in: body
+        name: client
+        required: true
+        schema:
+          $ref: '#/definitions/proxy_client.ProxyClientRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/proxy_client.ProxyClientResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Add a new VPN client
+      tags:
+      - clients
+swagger: "2.0"

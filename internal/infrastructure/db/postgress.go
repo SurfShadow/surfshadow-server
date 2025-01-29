@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	_ "github.com/jackc/pgx/stdlib" // Import for side effects
+	_ "github.com/jackc/pgx/stdlib"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/SurfShadow/surfshadow-server/internal/infrastructure/config"
@@ -34,6 +34,7 @@ func NewPsqlDB(c *config.DBConfig) (*sqlx.DB, error) {
 
 	db, err := sqlx.Connect(c.PgDriver, dataSourceName)
 	if err != nil {
+		logger.Instance.Errorf("Failed to connect to database: %v", err)
 		return nil, err
 	}
 
@@ -51,9 +52,14 @@ func NewPsqlDB(c *config.DBConfig) (*sqlx.DB, error) {
 	logger.Instance.Debugf("Connection max idle time: %d", connMaxIdleTime)
 	db.SetConnMaxIdleTime(connMaxIdleTime * time.Second)
 
-	if err := db.Ping(); err != nil {
+	logger.Instance.Info("Pinging database to verify connection")
+	
+	if err = db.Ping(); err != nil {
+		logger.Instance.Errorf("Failed to ping database: %v", err)
 		return nil, err
 	}
+
+	logger.Instance.Info("Database ping successful")
 
 	return db, nil
 }

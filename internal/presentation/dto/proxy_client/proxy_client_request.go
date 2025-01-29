@@ -1,4 +1,4 @@
-package dto
+package proxy_client
 
 type ProxyClientRequest struct {
 	Title        string `json:"title" validate:"required"`

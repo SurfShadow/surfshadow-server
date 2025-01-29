@@ -7,6 +7,12 @@ import (
 	"github.com/spf13/viper"
 )
 
+const (
+	errReadingConfig       = "error reading config"
+	errUnmarshallingConfig = "error unmarshalling config"
+	errValidatingConfig    = "error validating config"
+)
+
 type Config struct {
 	Server  *ServerConfig  `mapstructure:"SERVER" validate:"required"`
 	DB      *DBConfig      `mapstructure:"DB" validate:"required"`
@@ -65,17 +71,17 @@ func LoadConfig() (*Config, error) {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		return nil, fmt.Errorf("error reading config: %w", err)
+		return nil, fmt.Errorf("%s: %w", errReadingConfig, err)
 	}
 
 	var config Config
 	if err := viper.Unmarshal(&config); err != nil {
-		return nil, fmt.Errorf("error unmarshalling config: %w", err)
+		return nil, fmt.Errorf("%s: %w", errUnmarshallingConfig, err)
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(&config); err != nil {
-		return nil, fmt.Errorf("error validating config: %w", err)
+		return nil, fmt.Errorf("%s: %w", errValidatingConfig, err)
 	}
 
 	return &config, nil
