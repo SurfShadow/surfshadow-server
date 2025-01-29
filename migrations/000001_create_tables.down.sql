@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS "subcriptions";
 DROP TABLE IF EXISTS "subcription_types";
 DROP TABLE IF EXISTS "transactions";
 DROP TABLE IF EXISTS "referals";
-DROP TABLE IF EXISTS "vpn_clients";
+DROP TABLE IF EXISTS "proxy_clients";
 DROP TABLE IF EXISTS "configs";
 DROP TABLE IF EXISTS "roles";
 DROP TABLE IF EXISTS "users";
