@@ -19,9 +19,12 @@ var once sync.Once
 
 func NewLogger(cfg *config.LoggerConfig) error {
 	var err error
+
 	once.Do(func() {
 		var zapLevel zapcore.Level
-		if err = zapLevel.UnmarshalText([]byte(cfg.Level)); err != nil {
+
+		err = zapLevel.UnmarshalText([]byte(cfg.Level))
+		if err != nil {
 			return
 		}
 
