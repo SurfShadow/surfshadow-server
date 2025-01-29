@@ -17,8 +17,8 @@ import (
 )
 
 const (
-	privateKeyPath = "ssl/server.crt"
-	publicKeyPath  = "ssl/server.pem"
+	privateKeyPath = "ssl/server.crt" //nolint:unused
+	publicKeyPath  = "ssl/server.pem" //nolint:unused
 )
 
 type Server struct {

@@ -26,9 +26,7 @@ type ProxyClientRepositoryImpl struct {
 
 func NewProxyClientRepository(db *sqlx.DB) repositories.ProxyClientRepository {
 	logger.Instance.Debug("Initializing ProxyClientRepository")
-	return &ProxyClientRepositoryImpl{
-		db: db,
-	}
+	return &ProxyClientRepositoryImpl{db: db}
 }
 
 func (r *ProxyClientRepositoryImpl) Create(client *entities.ProxyClient) (*entities.ProxyClient, error) {

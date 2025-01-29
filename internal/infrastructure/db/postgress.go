@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	_ "github.com/jackc/pgx/stdlib"
+	_ "github.com/jackc/pgx/stdlib" // pgx driver
 	"github.com/jmoiron/sqlx"
 
 	"github.com/SurfShadow/surfshadow-server/internal/infrastructure/config"
@@ -53,7 +53,7 @@ func NewPsqlDB(c *config.DBConfig) (*sqlx.DB, error) {
 	db.SetConnMaxIdleTime(connMaxIdleTime * time.Second)
 
 	logger.Instance.Info("Pinging database to verify connection")
-	
+
 	if err = db.Ping(); err != nil {
 		logger.Instance.Errorf("Failed to ping database: %v", err)
 		return nil, err

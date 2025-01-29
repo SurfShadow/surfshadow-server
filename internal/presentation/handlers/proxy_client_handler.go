@@ -48,7 +48,7 @@ func NewProxyClientHandler(useCase *usecases.ProxyClientUseCase) *ProxyClientHan
 // @Success 201 {object} proxy_client.ProxyClientResponse
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
-// @Router /proxy-clients [post]
+// @Router /proxy-clients [post].
 func (h *ProxyClientHandler) CreateProxyClient(w http.ResponseWriter, r *http.Request) {
 	var req proxy_client.ProxyClientRequest
 
@@ -102,7 +102,7 @@ func (h *ProxyClientHandler) CreateProxyClient(w http.ResponseWriter, r *http.Re
 // @Success 200 {array} proxy_client.ProxyClientResponse
 // @Failure 404 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
-// @Router /proxy-clients [get]
+// @Router /proxy-clients [get].
 func (h *ProxyClientHandler) GetAllProxyClients(w http.ResponseWriter, r *http.Request) {
 	queryParams := r.URL.Query()
 	idParam := queryParams.Get("id")
@@ -159,7 +159,7 @@ func (h *ProxyClientHandler) GetAllProxyClients(w http.ResponseWriter, r *http.R
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 404 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
-// @Router /clients/{vpn_client_id} [patch]
+// @Router /clients/{vpn_client_id} [patch].
 func (h *ProxyClientHandler) UpdateProxyClient(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
@@ -218,7 +218,7 @@ func (h *ProxyClientHandler) UpdateProxyClient(w http.ResponseWriter, r *http.Re
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 404 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
-// @Router /clients/{vpn_client_id} [delete]
+// @Router /clients/{vpn_client_id} [delete].
 func (h *ProxyClientHandler) DeleteProxyClient(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
