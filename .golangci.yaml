@@ -41,7 +41,6 @@ linters:
     - nestif
     - prealloc
     - testpackage
-    - wsl
 linters-settings:
   lll:
     line-length: 140
@@ -65,7 +64,31 @@ issues:
         - funlen
         - dupl
 
-    - path: "_test.go"
-      linters:
+    - linters:
         - gocritic
       text: 'hugeParam\: \S+ is heavy \(\d+ bytes\)\; consider passing it by pointer'
+
+    - path: "internal/infrastructure/db/postgress.go"
+      linters:
+        - revive
+      text: "Import for side effects"
+
+    - linters:
+        - revive
+      text: "Import for side effects"
+
+    - linters:
+        - revive
+      text: "don't use an underscore in package name"
+
+    - linters:
+        - stylecheck
+      text: "should not use underscores in package names"
+
+    - linters:
+        - gocritic
+      text: "include an explanation for nolint directive"
+
+    - linters:
+        - staticcheck
+      text: "printf-style function with dynamic format string and no further arguments should use print-style function instead"

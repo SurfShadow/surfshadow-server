@@ -1,0 +1,10 @@
+ALTER TABLE "users" DROP CONSTRAINT IF EXISTS "users_role_id_fkey";
+ALTER TABLE "users" DROP CONSTRAINT IF EXISTS "users_referer_id_fkey";
+ALTER TABLE "configs" DROP CONSTRAINT IF EXISTS "configs_user_id_fkey";
+ALTER TABLE "configs" DROP CONSTRAINT IF EXISTS "configs_server_id_fkey";
+ALTER TABLE "referals" DROP CONSTRAINT IF EXISTS "referals_referee_id_fkey";
+ALTER TABLE "referals" DROP CONSTRAINT IF EXISTS "referals_referal_id_fkey";
+ALTER TABLE "transactions" DROP CONSTRAINT IF EXISTS "transactions_user_id_fkey";
+ALTER TABLE "subcriptions" DROP CONSTRAINT IF EXISTS "subcriptions_user_id_fkey";
+ALTER TABLE "subcriptions" DROP CONSTRAINT IF EXISTS "subcriptions_subscription_type_id_fkey";
+ALTER TABLE "server_credentials" DROP CONSTRAINT IF EXISTS "server_credentials_server_id_fkey";
