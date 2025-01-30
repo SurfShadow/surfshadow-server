@@ -121,6 +121,9 @@ workflows:
       - build-go-executables:
           requires:
             - test-go
+      - lint-go:
+          requires:
+            - test-go
       # - deploy:
       #     requires:
       #       - build-go-executables
